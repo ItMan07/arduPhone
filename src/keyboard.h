@@ -27,45 +27,7 @@ void keyboard()
     Serial.println(key);
     // key_timer = millis();
 
-    if (key == 'B')
-    {
-      sendATCommand("ATA", true);
-
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Accept call");
-    }
-
-    else if (key == 'D')
-    {
-      sendATCommand("ATH", true);
-
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Disconnect call");
-    }
-
-    else if (key == 'C')
-    {
-      String _response = sendATCommand("AT+CSQ", true);
-
-      lcd.clear();
-      lcd.setCursor(0, 0);
-      lcd.print("Link quality:");
-      lcd.setCursor(0, 1);
-      lcd.print(_response);
-    }
-
-    else if (key == '*')
-    {
-      lcd.clear();
-      lcd.setCursor(0, 0); // столбец 1 строка 0
-      lcd.print("ITM technologies");
-      lcd.setCursor(0, 1);
-      lcd.print(" ArduPhone v1.0");
-    }
-
-    else if (key == 'A')
+    if (key == 'A')
     {
       Serial.println("Начните набор номера (8 *** *** ****)");
 
@@ -121,16 +83,54 @@ void keyboard()
         }
       }
     }
+
+    else if (key == 'B')
+    {
+      lcd.clear();
+      lcd.setCursor(0, 0); // столбец 1 строка 0
+      lcd.print("ITM technologies");
+      lcd.setCursor(0, 1);
+      lcd.print(" ArduPhone v1.0");
+    }
+
+    else if (key == 'C')
+    {
+      String _response = sendATCommand("AT+CCALR?", 1);
+
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Link quality:");
+      lcd.setCursor(0, 1);
+      lcd.print(_response);
+    }
+
+    else if (key == 'D')
+    {
+      String _response = sendATCommand("AT+CSQ", true);
+
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Link quality:");
+      lcd.setCursor(0, 1);
+      lcd.print(_response);
+    }
+
+    else if (key == '*')
+    {
+      sendATCommand("ATA", true);
+
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Accept call");
+    }
+
+    else if (key == '#')
+    {
+      sendATCommand("ATH", true);
+
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Disconnect call");
+    }
   }
-
-  // else if (millis() - key_timer >= 10000)
-  // {
-  //   key_timer = millis();
-
-  //   lcd.clear();
-  //   lcd.setCursor(0, 0); // столбец 1 строка 0
-  //   lcd.print("ITM technologies");
-  //   lcd.setCursor(0, 1);
-  //   lcd.print(" ArduPhone v1.0");
-  // }
 }
